@@ -1,0 +1,2 @@
+go build -o bin/broker/broker cmd/broker/broker.go
+go build -o bin/class/class cmd/class/class.go
