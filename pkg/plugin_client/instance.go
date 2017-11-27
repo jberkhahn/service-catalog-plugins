@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package api
+package plugin_client
 
 import (
 	"github.com/jberkhahn/service-catalog-plugins/pkg/utils"
@@ -22,14 +22,14 @@ import (
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-func ListClasses() (*v1beta1.ClusterServiceClassList, error) {
+func ListInstances(namespace string) (*v1beta1.ServiceInstanceList, error) {
 	scClient, _ := utils.NewClient()
-	classes, err := scClient.ServicecatalogV1beta1().ClusterServiceClasses().List(v1.ListOptions{})
-	return classes, err
+	instances, err := scClient.ServicecatalogV1beta1().ServiceInstances(namespace).List(v1.ListOptions{})
+	return instances, err
 }
 
-func GetClass(className string) (*v1beta1.ClusterServiceClass, error) {
+func GetInstance(namespace, instanceName string) (*v1beta1.ServiceInstance, error) {
 	scClient, _ := utils.NewClient()
-	class, err := scClient.ServicecatalogV1beta1().ClusterServiceClasses().Get(className, v1.GetOptions{})
-	return class, err
+	instance, err := scClient.ServicecatalogV1beta1().ServiceInstances(namespace).Get(instanceName, v1.GetOptions{})
+	return instance, err
 }

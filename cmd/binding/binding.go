@@ -20,7 +20,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/jberkhahn/service-catalog-plugins/pkg/api"
+	"github.com/jberkhahn/service-catalog-plugins/pkg/plugin_client"
 	"github.com/jberkhahn/service-catalog-plugins/pkg/utils"
 )
 
@@ -50,7 +50,7 @@ func main() {
 			utils.Exit1(listUsage)
 		}
 		namespace := os.Args[2]
-		bindings, err := api.ListBindings(namespace)
+		bindings, err := plugin_client.ListBindings(namespace)
 		if err != nil {
 			utils.Exit1(fmt.Sprintf("Unable to list bindings in namespace %s (%s)", namespace, err))
 		}
@@ -69,7 +69,7 @@ func main() {
 		}
 		namespace := os.Args[2]
 		bindingName := os.Args[3]
-		binding, err := api.GetBinding(namespace, bindingName)
+		binding, err := plugin_client.GetBinding(namespace, bindingName)
 		if err != nil {
 			utils.Exit1(fmt.Sprintf("Unable to find binding %s in namespae %s (%s)", bindingName, namespace, err))
 		}

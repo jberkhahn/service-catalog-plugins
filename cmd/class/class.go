@@ -20,7 +20,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/jberkhahn/service-catalog-plugins/pkg/api"
+	"github.com/jberkhahn/service-catalog-plugins/pkg/plugin_client"
 	"github.com/jberkhahn/service-catalog-plugins/pkg/utils"
 )
 
@@ -42,7 +42,7 @@ func main() {
 	}
 
 	if os.Args[1] == "list" {
-		classes, err := api.ListClasses()
+		classes, err := plugin_client.ListClasses()
 		if err != nil {
 			utils.Exit1(fmt.Sprintf("Unable to list classes (%s)", err))
 		}
@@ -60,7 +60,7 @@ func main() {
 			utils.Exit1(getUsage)
 		}
 		className := os.Args[2]
-		class, err := api.GetClass(className)
+		class, err := plugin_client.GetClass(className)
 		if err != nil {
 			utils.Exit1(fmt.Sprintf("Unable to find class %s (%s)", className, err))
 		}

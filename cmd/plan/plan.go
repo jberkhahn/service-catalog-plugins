@@ -20,7 +20,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/jberkhahn/service-catalog-plugins/pkg/api"
+	"github.com/jberkhahn/service-catalog-plugins/pkg/plugin_client"
 	"github.com/jberkhahn/service-catalog-plugins/pkg/utils"
 )
 
@@ -42,7 +42,7 @@ func main() {
 	}
 
 	if os.Args[1] == "list" {
-		plans, err := api.ListPlans()
+		plans, err := plugin_client.ListPlans()
 		if err != nil {
 			utils.Exit1(fmt.Sprintf("Unable to list plans (%s)", err))
 		}
@@ -60,7 +60,7 @@ func main() {
 			utils.Exit1(getUsage)
 		}
 		planName := os.Args[2]
-		plan, err := api.GetPlan(planName)
+		plan, err := plugin_client.GetPlan(planName)
 		if err != nil {
 			utils.Exit1(fmt.Sprintf("Unable to find plan %s (%s)", planName, err))
 		}

@@ -20,7 +20,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/jberkhahn/service-catalog-plugins/pkg/api"
+	"github.com/jberkhahn/service-catalog-plugins/pkg/plugin_client"
 	"github.com/jberkhahn/service-catalog-plugins/pkg/utils"
 )
 
@@ -42,7 +42,7 @@ func main() {
 	}
 
 	if os.Args[1] == "list" {
-		brokers, err := api.ListBrokers()
+		brokers, err := plugin_client.ListBrokers()
 		if err != nil {
 			utils.Exit1(fmt.Sprintf("Unable to list brokers (%s)", err))
 		}
@@ -60,7 +60,7 @@ func main() {
 			utils.Exit1(getUsage)
 		}
 		brokerName := os.Args[2]
-		broker, err := api.GetBroker(brokerName)
+		broker, err := plugin_client.GetBroker(brokerName)
 		if err != nil {
 			utils.Exit1(fmt.Sprintf("Unable to find broker %s (%s)", brokerName, err))
 		}
