@@ -1,2 +1,5 @@
 bin/broker/broker
 bin/class/class
+bin/instance/instance
+bin/plan/plan
+bin/binding/binding
