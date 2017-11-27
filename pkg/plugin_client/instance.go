@@ -17,19 +17,16 @@ limitations under the License.
 package plugin_client
 
 import (
-	"github.com/jberkhahn/service-catalog-plugins/pkg/utils"
 	"github.com/kubernetes-incubator/service-catalog/pkg/apis/servicecatalog/v1beta1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-func ListInstances(namespace string) (*v1beta1.ServiceInstanceList, error) {
-	scClient, _ := utils.NewClient()
-	instances, err := scClient.ServicecatalogV1beta1().ServiceInstances(namespace).List(v1.ListOptions{})
-	return instances, err
+func (c *PluginClient) GetInstance(namespace, instanceName string) (*v1beta1.ServiceInstance, error) {
+	instance, err := c.ScClient.ServicecatalogV1beta1().ServiceInstances(namespace).Get(instanceName, v1.GetOptions{})
+	return instance, err
 }
 
-func GetInstance(namespace, instanceName string) (*v1beta1.ServiceInstance, error) {
-	scClient, _ := utils.NewClient()
-	instance, err := scClient.ServicecatalogV1beta1().ServiceInstances(namespace).Get(instanceName, v1.GetOptions{})
-	return instance, err
+func (c *PluginClient) ListInstances(namespace string) (*v1beta1.ServiceInstanceList, error) {
+	instances, err := c.ScClient.ServicecatalogV1beta1().ServiceInstances(namespace).List(v1.ListOptions{})
+	return instances, err
 }

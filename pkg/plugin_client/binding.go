@@ -17,19 +17,16 @@ limitations under the License.
 package plugin_client
 
 import (
-	"github.com/jberkhahn/service-catalog-plugins/pkg/utils"
 	"github.com/kubernetes-incubator/service-catalog/pkg/apis/servicecatalog/v1beta1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-func ListBindings(namespace string) (*v1beta1.ServiceBindingList, error) {
-	scClient, _ := utils.NewClient()
-	bindings, err := scClient.ServicecatalogV1beta1().ServiceBindings(namespace).List(v1.ListOptions{})
-	return bindings, err
+func (c *PluginClient) GetBinding(namespace, bindingName string) (*v1beta1.ServiceBinding, error) {
+	binding, err := c.ScClient.ServicecatalogV1beta1().ServiceBindings(namespace).Get(bindingName, v1.GetOptions{})
+	return binding, err
 }
 
-func GetBinding(namespace, bindingName string) (*v1beta1.ServiceBinding, error) {
-	scClient, _ := utils.NewClient()
-	binding, err := scClient.ServicecatalogV1beta1().ServiceBindings(namespace).Get(bindingName, v1.GetOptions{})
-	return binding, err
+func (c *PluginClient) ListBindings(namespace string) (*v1beta1.ServiceBindingList, error) {
+	bindings, err := c.ScClient.ServicecatalogV1beta1().ServiceBindings(namespace).List(v1.ListOptions{})
+	return bindings, err
 }

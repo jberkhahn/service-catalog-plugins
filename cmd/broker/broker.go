@@ -41,8 +41,12 @@ func main() {
 		utils.Exit1(usage)
 	}
 
+	client, err := plugin_client.NewClient()
+	if err != nil {
+		utils.Exit1(fmt.Sprintf("Unable to initialize service catalog client (%s)", err))
+	}
 	if os.Args[1] == "list" {
-		brokers, err := plugin_client.ListBrokers()
+		brokers, err := client.ListBrokers()
 		if err != nil {
 			utils.Exit1(fmt.Sprintf("Unable to list brokers (%s)", err))
 		}
@@ -60,7 +64,7 @@ func main() {
 			utils.Exit1(getUsage)
 		}
 		brokerName := os.Args[2]
-		broker, err := plugin_client.GetBroker(brokerName)
+		broker, err := client.GetBroker(brokerName)
 		if err != nil {
 			utils.Exit1(fmt.Sprintf("Unable to find broker %s (%s)", brokerName, err))
 		}

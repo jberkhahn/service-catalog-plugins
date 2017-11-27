@@ -17,19 +17,16 @@ limitations under the License.
 package plugin_client
 
 import (
-	"github.com/jberkhahn/service-catalog-plugins/pkg/utils"
 	"github.com/kubernetes-incubator/service-catalog/pkg/apis/servicecatalog/v1beta1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-func ListClasses() (*v1beta1.ClusterServiceClassList, error) {
-	scClient, _ := utils.NewClient()
-	classes, err := scClient.ServicecatalogV1beta1().ClusterServiceClasses().List(v1.ListOptions{})
-	return classes, err
+func (c *PluginClient) GetClass(className string) (*v1beta1.ClusterServiceClass, error) {
+	class, err := c.ScClient.ServicecatalogV1beta1().ClusterServiceClasses().Get(className, v1.GetOptions{})
+	return class, err
 }
 
-func GetClass(className string) (*v1beta1.ClusterServiceClass, error) {
-	scClient, _ := utils.NewClient()
-	class, err := scClient.ServicecatalogV1beta1().ClusterServiceClasses().Get(className, v1.GetOptions{})
-	return class, err
+func (c *PluginClient) ListClasses() (*v1beta1.ClusterServiceClassList, error) {
+	classes, err := c.ScClient.ServicecatalogV1beta1().ClusterServiceClasses().List(v1.ListOptions{})
+	return classes, err
 }

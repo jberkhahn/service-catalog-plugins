@@ -17,19 +17,16 @@ limitations under the License.
 package plugin_client
 
 import (
-	"github.com/jberkhahn/service-catalog-plugins/pkg/utils"
 	"github.com/kubernetes-incubator/service-catalog/pkg/apis/servicecatalog/v1beta1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-func ListBrokers() (*v1beta1.ClusterServiceBrokerList, error) {
-	scClient, _ := utils.NewClient()
-	brokers, err := scClient.ServicecatalogV1beta1().ClusterServiceBrokers().List(v1.ListOptions{})
-	return brokers, err
+func (c *PluginClient) GetBroker(brokerName string) (*v1beta1.ClusterServiceBroker, error) {
+	broker, err := c.ScClient.ServicecatalogV1beta1().ClusterServiceBrokers().Get(brokerName, v1.GetOptions{})
+	return broker, err
 }
 
-func GetBroker(brokerName string) (*v1beta1.ClusterServiceBroker, error) {
-	scClient, _ := utils.NewClient()
-	broker, err := scClient.ServicecatalogV1beta1().ClusterServiceBrokers().Get(brokerName, v1.GetOptions{})
-	return broker, err
+func (c *PluginClient) ListBrokers() (*v1beta1.ClusterServiceBrokerList, error) {
+	brokers, err := c.ScClient.ServicecatalogV1beta1().ClusterServiceBrokers().List(v1.ListOptions{})
+	return brokers, err
 }

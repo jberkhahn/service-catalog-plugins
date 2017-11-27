@@ -41,8 +41,12 @@ func main() {
 		utils.Exit1(usage)
 	}
 
+	client, err := plugin_client.NewClient()
+	if err != nil {
+		utils.Exit1(fmt.Sprintf("Unable to initialize service catalog client (%s)", err))
+	}
 	if os.Args[1] == "list" {
-		classes, err := plugin_client.ListClasses()
+		classes, err := client.ListClasses()
 		if err != nil {
 			utils.Exit1(fmt.Sprintf("Unable to list classes (%s)", err))
 		}
@@ -60,7 +64,7 @@ func main() {
 			utils.Exit1(getUsage)
 		}
 		className := os.Args[2]
-		class, err := plugin_client.GetClass(className)
+		class, err := client.GetClass(className)
 		if err != nil {
 			utils.Exit1(fmt.Sprintf("Unable to find class %s (%s)", className, err))
 		}

@@ -41,8 +41,12 @@ func main() {
 		utils.Exit1(usage)
 	}
 
+	client, err := plugin_client.NewClient()
+	if err != nil {
+		utils.Exit1(fmt.Sprintf("Unable to initialize service catalog client (%s)", err))
+	}
 	if os.Args[1] == "list" {
-		plans, err := plugin_client.ListPlans()
+		plans, err := client.ListPlans()
 		if err != nil {
 			utils.Exit1(fmt.Sprintf("Unable to list plans (%s)", err))
 		}
@@ -60,7 +64,7 @@ func main() {
 			utils.Exit1(getUsage)
 		}
 		planName := os.Args[2]
-		plan, err := plugin_client.GetPlan(planName)
+		plan, err := client.GetPlan(planName)
 		if err != nil {
 			utils.Exit1(fmt.Sprintf("Unable to find plan %s (%s)", planName, err))
 		}

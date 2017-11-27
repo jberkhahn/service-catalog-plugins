@@ -45,12 +45,16 @@ func main() {
 		utils.Exit1(usage)
 	}
 
+	client, err := plugin_client.NewClient()
+	if err != nil {
+		utils.Exit1(fmt.Sprintf("Unable to initialize service catalog client (%s)", err))
+	}
 	if os.Args[1] == "list" {
 		if len(os.Args) != 3 {
 			utils.Exit1(listUsage)
 		}
 		namespace := os.Args[2]
-		instances, err := plugin_client.ListInstances(namespace)
+		instances, err := client.ListInstances(namespace)
 		if err != nil {
 			utils.Exit1(fmt.Sprintf("Unable to list instances in namespace %s (%s)", namespace, err))
 		}
@@ -69,7 +73,7 @@ func main() {
 		}
 		namespace := os.Args[2]
 		instanceName := os.Args[3]
-		instance, err := plugin_client.GetInstance(namespace, instanceName)
+		instance, err := client.GetInstance(namespace, instanceName)
 		if err != nil {
 			utils.Exit1(fmt.Sprintf("Unable to find instance %s in namespace %s (%s)", instanceName, namespace, err))
 		}

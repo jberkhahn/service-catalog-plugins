@@ -45,12 +45,16 @@ func main() {
 		utils.Exit1(usage)
 	}
 
+	client, err := plugin_client.NewClient()
+	if err != nil {
+		utils.Exit1(fmt.Sprintf("Unable to initialize service catalog client (%s)", err))
+	}
 	if os.Args[1] == "list" {
 		if len(os.Args) != 3 {
 			utils.Exit1(listUsage)
 		}
 		namespace := os.Args[2]
-		bindings, err := plugin_client.ListBindings(namespace)
+		bindings, err := client.ListBindings(namespace)
 		if err != nil {
 			utils.Exit1(fmt.Sprintf("Unable to list bindings in namespace %s (%s)", namespace, err))
 		}
@@ -69,7 +73,7 @@ func main() {
 		}
 		namespace := os.Args[2]
 		bindingName := os.Args[3]
-		binding, err := plugin_client.GetBinding(namespace, bindingName)
+		binding, err := client.GetBinding(namespace, bindingName)
 		if err != nil {
 			utils.Exit1(fmt.Sprintf("Unable to find binding %s in namespae %s (%s)", bindingName, namespace, err))
 		}
