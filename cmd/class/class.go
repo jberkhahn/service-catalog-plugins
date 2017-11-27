@@ -20,8 +20,8 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/jberkhahn/service-catalog-plugins/pkg/api"
 	"github.com/jberkhahn/service-catalog-plugins/pkg/utils"
-	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 const usage = `Usage:
@@ -41,9 +41,8 @@ func main() {
 		utils.Exit1(usage)
 	}
 
-	scClient, _ := utils.NewClient()
 	if os.Args[1] == "list" {
-		classes, err := scClient.ServicecatalogV1beta1().ClusterServiceClasses().List(v1.ListOptions{})
+		classes, err := api.ListClasses()
 		if err != nil {
 			utils.Exit1(fmt.Sprintf("Unable to list classes (%s)", err))
 		}
@@ -61,7 +60,7 @@ func main() {
 			utils.Exit1(getUsage)
 		}
 		className := os.Args[2]
-		class, err := scClient.ServicecatalogV1beta1().ClusterServiceClasses().Get(className, v1.GetOptions{})
+		class, err := api.GetClass(className)
 		if err != nil {
 			utils.Exit1(fmt.Sprintf("Unable to find class %s (%s)", className, err))
 		}

@@ -20,8 +20,8 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/jberkhahn/service-catalog-plugins/pkg/api"
 	"github.com/jberkhahn/service-catalog-plugins/pkg/utils"
-	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 const usage = `Usage:
@@ -41,15 +41,26 @@ func main() {
 		utils.Exit1(usage)
 	}
 
-	scClient, _ := utils.NewClient()
 	if os.Args[1] == "list" {
-		ListBroker()
+		brokers, err := api.ListBrokers()
+		if err != nil {
+			utils.Exit1(fmt.Sprintf("Unable to list brokers (%s)", err))
+		}
+
+		table := utils.NewTable("BROKER NAME", "NAMESPACE", "URL")
+		for _, v := range brokers.Items {
+			table.AddRow(v.Name, v.Namespace, v.Spec.URL)
+			err = table.Print()
+		}
+		if err != nil {
+			utils.Exit1(fmt.Sprintf("Error printing result (%s)", err))
+		}
 	} else if os.Args[1] == "get" {
 		if len(os.Args) != 3 {
 			utils.Exit1(getUsage)
 		}
 		brokerName := os.Args[2]
-		broker, err := scClient.ServicecatalogV1beta1().ClusterServiceBrokers().Get(brokerName, v1.GetOptions{})
+		broker, err := api.GetBroker(brokerName)
 		if err != nil {
 			utils.Exit1(fmt.Sprintf("Unable to find broker %s (%s)", brokerName, err))
 		}
@@ -58,22 +69,5 @@ func main() {
 		err = table.Print()
 	} else {
 		utils.Exit1(usage)
-	}
-}
-
-func ListBroker() {
-	scClient, _ := utils.NewClient()
-	brokers, err := scClient.ServicecatalogV1beta1().ClusterServiceBrokers().List(v1.ListOptions{})
-	if err != nil {
-		utils.Exit1(fmt.Sprintf("Unable to list brokers (%s)", err))
-	}
-
-	table := utils.NewTable("BROKER NAME", "NAMESPACE", "URL")
-	for _, v := range brokers.Items {
-		table.AddRow(v.Name, v.Namespace, v.Spec.URL)
-		err = table.Print()
-	}
-	if err != nil {
-		utils.Exit1(fmt.Sprintf("Error printing result (%s)", err))
 	}
 }
