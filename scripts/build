@@ -1,5 +1,0 @@
-go build -o bin/broker/broker cmd/broker/broker.go
-go build -o bin/class/class cmd/class/class.go
-go build -o bin/instance/instance cmd/instance/instance.go
-go build -o bin/plan/plan cmd/plan/plan.go
-go build -o bin/binding/binding cmd/binding/binding.go

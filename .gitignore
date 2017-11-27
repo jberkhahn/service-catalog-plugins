@@ -1,5 +1,5 @@
-bin/broker/broker
-bin/class/class
-bin/instance/instance
-bin/plan/plan
-bin/binding/binding
+plugins/broker/broker
+plugins/class/class
+plugins/instance/instance
+plugins/plan/plan
+plugins/binding/binding
