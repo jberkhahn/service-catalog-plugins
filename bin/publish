@@ -1,0 +1,24 @@
+go get github.com/mitchellh/gox
+
+mkdir plugins/darwin_amd64
+mkdir plugins/linux_amd64
+mkdir plugins/windows_amd64
+
+cp -r plugins/binding plugins/broker plugins/class plugins/instance plugins/plan plugins/darwin_amd64/
+cp -r plugins/binding plugins/broker plugins/class plugins/instance plugins/plan plugins/linux_amd64/
+cp -r plugins/binding plugins/broker plugins/class plugins/instance plugins/plan plugins/windows_amd64/
+
+
+gox -osarch="darwin/amd64 linux/amd64 windows/amd64" -output="plugins/{{.OS}}_{{.Arch}}/{{.Dir}}/{{.Dir}}" ./...
+
+pushd plugins/darwin_amd64
+zip -r svccat_plugins_darwin_amd64.zip binding/ broker/ class/ instance/ plan/
+popd
+
+pushd plugins/linux_amd64
+zip -r svccat_plugins_linux_amd64.zip binding/ broker/ class/ instance/ plan/
+popd
+
+pushd plugins/windows_amd64
+zip -r svccat_plugins_windows_amd64.zip binding/ broker/ class/ instance/ plan/
+popd
