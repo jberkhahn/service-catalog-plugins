@@ -73,7 +73,7 @@ func main() {
 		}
 		namespace := os.Args[2]
 		instanceName := os.Args[3]
-		instance, err := client.GetInstance(namespace, instanceName)
+		instance, err := client.GetInstance(instanceName, namespace)
 		if err != nil {
 			utils.Exit1(fmt.Sprintf("Unable to find instance %s in namespace %s (%s)", instanceName, namespace, err))
 		}

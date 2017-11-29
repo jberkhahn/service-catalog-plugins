@@ -21,7 +21,7 @@ import (
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-func (c *PluginClient) GetInstance(namespace, instanceName string) (*v1beta1.ServiceInstance, error) {
+func (c *PluginClient) GetInstance(instanceName, namespace string) (*v1beta1.ServiceInstance, error) {
 	instance, err := c.ScClient.ServicecatalogV1beta1().ServiceInstances(namespace).Get(instanceName, v1.GetOptions{})
 	return instance, err
 }
