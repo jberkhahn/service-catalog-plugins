@@ -1,4 +1,8 @@
-go get github.com/mitchellh/gox
+#!/bin/bash
+
+if ! type "gox" > /dev/null; then
+  go get github.com/mitchellh/gox
+fi
 
 mkdir plugins/darwin_amd64
 mkdir plugins/linux_amd64
@@ -6,7 +10,7 @@ mkdir plugins/windows_amd64
 
 cp -r plugins/binding plugins/broker plugins/class plugins/instance plugins/plan plugins/darwin_amd64/
 cp -r plugins/binding plugins/broker plugins/class plugins/instance plugins/plan plugins/linux_amd64/
-cp -r plugins/binding plugins/broker plugins/class plugins/instance plugins/plan plugins/windows_amd64/
+cp -r plugins/windows/binding plugins/windows/broker plugins/windows/class plugins/windows/instance plugins/windows/plan plugins/windows_amd64/
 
 
 gox -osarch="darwin/amd64 linux/amd64 windows/amd64" -output="plugins/{{.OS}}_{{.Arch}}/{{.Dir}}/{{.Dir}}" ./...

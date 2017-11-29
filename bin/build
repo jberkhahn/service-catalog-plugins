@@ -1,3 +1,5 @@
+#!/bin/bash
+
 go build -o plugins/broker/broker cmd/broker/broker.go
 go build -o plugins/class/class cmd/class/class.go
 go build -o plugins/instance/instance cmd/instance/instance.go
