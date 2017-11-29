@@ -30,7 +30,7 @@ import (
 )
 
 type PluginClient struct {
-	ScClient *clientset.Clientset
+	ScClient clientset.Interface
 	Config   *restclient.Config
 }
 

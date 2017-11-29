@@ -21,7 +21,7 @@ import (
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-func (c *PluginClient) GetBinding(namespace, bindingName string) (*v1beta1.ServiceBinding, error) {
+func (c *PluginClient) GetBinding(bindingName, namespace string) (*v1beta1.ServiceBinding, error) {
 	binding, err := c.ScClient.ServicecatalogV1beta1().ServiceBindings(namespace).Get(bindingName, v1.GetOptions{})
 	return binding, err
 }

@@ -73,7 +73,7 @@ func main() {
 		}
 		namespace := os.Args[2]
 		bindingName := os.Args[3]
-		binding, err := client.GetBinding(namespace, bindingName)
+		binding, err := client.GetBinding(bindingName, namespace)
 		if err != nil {
 			utils.Exit1(fmt.Sprintf("Unable to find binding %s in namespae %s (%s)", bindingName, namespace, err))
 		}
