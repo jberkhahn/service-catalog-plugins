@@ -1,8 +1,8 @@
+plugins/binding/binding
 plugins/broker/broker
 plugins/class/class
 plugins/instance/instance
 plugins/plan/plan
-plugins/binding/binding
-plugins/windows_amd64
-plugins/linux_amd64
 plugins/darwin_amd64
+plugins/linux_amd64
+windows_plugins/windows_amd64
