@@ -8,12 +8,11 @@ with the various resources from the Service-Catalog.
 tbd
 
 ## Development
-
-Clone the repo into your gopath, CD into the directory, and inflate
-the dependencies.
+You must inflate the dependencies with govendor before building
 
 ```
 git clone https://github.com/jberkhahn/service-catalog-plugins
 cd service-catalog-plugins
 govendor sync
+bin/build
 ```
