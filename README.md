@@ -12,9 +12,8 @@ tbd
 Clone the repo into your gopath, CD into the directory, and inflate
 the dependencies.
 
-`git clone https://github.com/jberkhahn/service-catalog-plugins
-
+```
+git clone https://github.com/jberkhahn/service-catalog-plugins
 cd service-catalog-plugins
-
-govendor sync`
-
+govendor sync
+```
